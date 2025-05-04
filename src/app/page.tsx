@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import GooeyNav from "@/blocks/Components/GooeyNav/GooeyNav";
+import BlurText from "@/blocks/TextAnimations/BlurText/BlurText";
+import TrueFocus from "@/blocks/TextAnimations/TrueFocus/TrueFocus";
 
 // Define items for GooeyNav
 const items = [
@@ -10,6 +12,10 @@ const items = [
   { label: "About", href: "#" },
   { label: "Contact", href: "#" },
 ];
+
+const handleAnimationComplete = () => {
+  console.log('Animation completed!');
+};
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -71,12 +77,46 @@ export default function Home() {
       )}
 
       {/* Main content area */}
-      <main className="flex flex-grow flex-col items-center justify-center p-8 sm:p-20 text-white">
-        <h2 className="text-3xl font-bold">Welcome to my Portfolio</h2>
-        <p className="font-light mt-4">This is some light weight text</p>
-        <p className="font-normal mt-2">This is normal weight text</p>
-        <p className="font-medium mt-2">This is medium weight text</p>
-        <p className="font-bold mt-2">This is bold weight text</p>
+      <main className="flex flex-grow flex-col p-8 sm:p-20 text-white max-w-10xl mx-auto">
+        <div className="w-full flex justify-center items-center my-8 text-center font-bold text-">
+          <BlurText
+            text="Lauvigne Lumeda"
+            delay={150}
+            animateBy="letters"
+            direction="top"
+            onAnimationComplete={handleAnimationComplete}
+            className="text-9xl text-center"
+          />
+        </div>
+
+        <div className="font-bold text-3xl text-center opacity-0 animate-fadeIn">
+          <TrueFocus 
+            sentence="Web Developer"
+            manualMode={true}
+            blurAmount={5}
+            borderColor="cyan"
+            animationDuration={0.3}
+            pauseBetweenAnimations={1}
+            />
+          </div>
+
+        <style jsx>{`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.8s;
+          }
+        `}</style>
       </main>
 
       {/* Footer Section */}
