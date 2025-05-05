@@ -14,6 +14,10 @@ module.exports = {
         medium: '500',
         bold: '700',
       },
+      fontStyle: {
+        italic: 'italic',
+        normal: 'normal',
+      },
     },
   },
   plugins: [],

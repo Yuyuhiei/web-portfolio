@@ -25,6 +25,97 @@
   }
 }
 
+/* Add this CSS block to your global stylesheet */
+.custom-corner-border {
+  position: relative; /* Needed for absolute positioning of pseudo-elements */
+  border: none !important; /* Remove any existing border */
+  box-sizing: border-box; /* Include padding/border in element's total size */
+  /* Optional: Adjust padding if the corner lines feel too close to content */
+  /* padding: calc(1.5rem + 2px); // Example: if original padding was p-6 (1.5rem) */
+}
+
+.custom-corner-border::before,
+.custom-corner-border::after {
+  content: ''; /* Required for pseudo-elements to render */
+  position: absolute; /* Position relative to the .custom-corner-border parent */
+  width: 20px; /* Set the length of the horizontal/vertical corner lines */
+  height: 20px; /* Set the length of the horizontal/vertical corner lines */
+  border-color: #ffffff; /* Use the color equivalent of Tailwind's gray-800 */
+  border-style: solid;
+  border-width: 0; /* Start with no border, define specific borders below */
+  box-sizing: border-box; /* Include the pseudo-element's border in its size */
+  z-index: 1; /* Ensure corner is above the content if needed */
+}
+
+/* Styles for the Top-Left corner piece (using ::before) */
+.custom-corner-border::before {
+  top: 0;
+  left: 0;
+  border-top-width: 2px; /* Thick top border */
+  border-left-width: 2px; /* Thick left border */
+}
+
+/* Styles for the Bottom-Right corner piece (using ::after) */
+.custom-corner-border::after {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 2px; /* Thick bottom border */
+  border-right-width: 2px; /* Thick right border */
+}
+
+/*
+   To get the Top-Right and Bottom-Left corners as well using this
+   pseudo-element approach directly on the card div is not possible
+   with just ::before and ::after. You would typically need to:
+   1. Add wrapper elements inside your card divs to apply more pseudo-elements.
+   2. Use a more advanced CSS technique like border-image or background gradients
+      which can be more complex to set up for this specific L-shape effect.
+
+   The code above provides the Top-Left and Bottom-Right corners as requested.
+   If you absolutely need all four corners with this style, let me know,
+   and we can explore options that might involve slightly restructuring the HTML
+   inside the card divs.
+*/
+
+
+/* Hide the default scrollbar */
+body {
+  scrollbar-width: none;  /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+/* Style the scrollbar for Webkit browsers (Chrome, Safari) */
+body::-webkit-scrollbar {
+  width: 8px;  /* Width of the scrollbar */
+}
+
+/* Style the track (the background of the scrollbar) */
+body::-webkit-scrollbar-track {
+  background: transparent;  /* Make the track transparent */
+}
+
+/* Style the thumb (the draggable part of the scrollbar) */
+body::-webkit-scrollbar-thumb {
+  background-color: #06b6d4;  /* Cyan color for the thumb */
+  border-radius: 4px;  /* Rounded corners for the thumb */
+  /* Add a subtle glow effect on the thumb */
+  box-shadow: 0 0 8px 2px rgba(6, 182, 212, 0.6);
+}
+
+/* Optional: Style the thumb on hover */
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #0891b2; /* Slightly darker cyan on hover */
+  box-shadow: 0 0 12px 3px rgba(8, 145, 170, 0.8); /* More intense glow on hover */
+}
+
+/* For Firefox - style the scrollbar thumb and track */
+/* Note: scrollbar-color applies to both thumb and track */
+body {
+  scrollbar-color: #06b6d4 transparent; /* thumb color track color */
+}
+
+
+
 /* Keep your existing body styles and add position relative */
 body {
   background: var(--background);
