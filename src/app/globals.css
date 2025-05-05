@@ -1,10 +1,15 @@
+/* globals.css */
+
+/* Keep your existing Tailwind import */
 @import "tailwindcss";
 
+/* Keep your root variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* Keep your theme rule */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,6 +17,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Keep your dark mode media query */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,9 +25,45 @@
   }
 }
 
+/* Keep your existing body styles and add position relative */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-gilroy), Arial, Helvetica, sans-serif;
+  position: relative; /* Added for positioning context if needed */
 }
+
+
+/* Add the noise effect pseudo-element */
+body::after {
+  content: ""; /* Required for pseudo-elements */
+  position: fixed; /* Cover the entire viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Place it behind the main content */
+
+  /* --- Noise Effect using SVG Filter --- */
+  /* Adjust opacity (e.g., 0.03 to 0.1) to control noise intensity */
+  opacity: 0.05; /* You can adjust this value */
+  /* Apply the filter using a data URI */
+  filter: url('data:image/svg+xml,\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">\
+      <filter id="noise">\
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>\
+      </filter>\
+      <rect width="100%" height="100%" filter="url(%23noise)"/>\
+    </svg>\
+  #noise');
+
+  /* Prevent the pseudo-element from interfering with mouse events */
+  pointer-events: none;
+}
+
+/* Optional: Animation styles (keep commented out unless needed) */
+/* @keyframes noiseAnimation { ... } */
+/* body::after { ... animation: noiseAnimation ... } */
 
