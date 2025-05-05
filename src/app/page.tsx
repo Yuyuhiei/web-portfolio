@@ -9,6 +9,7 @@ import Threads from "@/blocks/Backgrounds/Threads/Threads";
 import CircularText from "@/blocks/TextAnimations/CircularText/CircularText";
 import ScrollReveal from "@/blocks/TextAnimations/ScrollReveal/ScrollReveal";
 import TiltedCard from "@/blocks/Components/TiltedCard/TiltedCard";
+import ExperienceTimeline from '@/components/ExperienceTimeline';
 
 // Define items for GooeyNav
 const items = [
@@ -27,7 +28,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#101112] font-gilroy">
       {/* Header Section */}
-      <header className="relative flex w-full items-center justify-between p-10">
+      <header className="sticky top-0 z-50 flex w-full items-center justify-between p-6 md:p-8 bg-[#101112]/90 backdrop-blur-sm">
         {/* Logo */}
         <Image 
           src="/logo/lauv-logo2.svg"
@@ -38,7 +39,7 @@ export default function Home() {
         />
 
         {/* Desktop Navigation - hidden on small screens */}
-        <div className="hidden md:block font-medium" style={{ height: '70px', width: '400px', position: 'relative' }}>
+        <div className="hidden md:block font-medium" style={{ height: '70px', width: '450px', position: 'relative' }}>
           <GooeyNav
             items={items}
             particleCount={15}
@@ -155,15 +156,15 @@ export default function Home() {
           {/* Removed background, added dashed border */}
           <div className="relative p-6 rounded-lg transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-dashed border-gray-800">
 
-            <h3 className="text-purple-400 font-bold text-2xl tracking-wide mb-3"> {/* Increased size, adjusted margin */}
+            <h3 className="text-white font-bold text-2xl tracking-wide mb-3"> {/* Increased size, adjusted margin */}
               DEVELOP
             </h3>
             <p className="text-gray-400 text-sm mt-2 leading-relaxed mb-5"> {/* Adjusted margins */}
-              Started building websites with javascript and PHP, now I craft them with TypeScript, React, Node.js, Next and a little bit of magic!
+              Started creating mobile applications using Flutter, FlutterFlow, and Firebase and eventually switched to Web Development using NextJS, React, and Tailwind
               {/* Updated description to match image */}
             </p>
 
-            <h4 className="text-gray-300 font-semibold mb-3 text-base"> {/* Adjusted text color/size */}
+            <h4 className="text-cyan-300 font-semibold mb-3 text-base"> {/* Adjusted text color/size */}
               Skillset &amp; tools
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -177,6 +178,8 @@ export default function Home() {
               <span className="bg-transparent text-gray-300 py-1 px-4 rounded-full text-sm font-medium border border-gray-600">Python</span>
               <span className="bg-transparent text-gray-300 py-1 px-4 rounded-full text-sm font-medium border border-gray-600">Springboot</span>
               <span className="bg-transparent text-gray-300 py-1 px-4 rounded-full text-sm font-medium border border-gray-600">Flutterflow</span>
+              <span className="bg-transparent text-gray-300 py-1 px-4 rounded-full text-sm font-medium border border-gray-600">Firebase</span>
+              <span className="bg-transparent text-gray-300 py-1 px-4 rounded-full text-sm font-medium border border-gray-600">Supabase</span>
               <span className="bg-transparent text-gray-300 py-1 px-4 rounded-full text-sm font-medium border border-gray-600">MySQL</span>
               {/* Add more development technologies if needed */}
             </div>
@@ -186,14 +189,14 @@ export default function Home() {
           {/* Removed background, added dashed border */}
           <div className="relative p-6 rounded-lg transition-transform duration-300 ease-in-out hover:scale-105 border-2 border-dashed border-gray-800">
 
-            <h3 className="text-cyan-400 font-bold text-2xl tracking-wide mb-3"> {/* Changed color, Increased size, adjusted margin */}
+            <h3 className="text-white font-bold text-2xl tracking-wide mb-3"> {/* Changed color, Increased size, adjusted margin */}
               CONTENTS
             </h3>
             <p className="text-gray-400 text-sm mt-2 leading-relaxed mb-5"> {/* Adjusted margins */}
-              Crafting intuitive and visually appealing interfaces. I focus on user experience and aesthetics.
+              Started creating contents as a side hustle and eventually switched to creating contents for creators, achieving an average of 15 million reach in 90 days
               {/* Kept previous description, adjust as needed */}
             </p>
-            <h4 className="text-gray-300 font-semibold mb-3 text-base"> {/* Adjusted text color/size */}
+            <h4 className="text-cyan-300 font-semibold mb-3 text-base"> {/* Adjusted text color/size */}
               Skillset &amp; Tools
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -244,6 +247,20 @@ export default function Home() {
           />
           </div>
         </div>
+
+        {/* Experience Section */}
+        <div className="flex w-full items-center justify-center p-4 mt-40">
+          <BlurText
+            text=" My Experience"
+            delay={150}
+            animateBy="words"
+            direction="top"
+            onAnimationComplete={handleAnimationComplete}
+            className="text-7xl font-extrabold"
+          />
+        </div>
+        <ExperienceTimeline
+         />
       </main>
 
       {/* Footer Section */}
