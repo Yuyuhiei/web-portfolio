@@ -1,6 +1,6 @@
 import React from 'react';
-import Image from 'next/image'; // Make sure you have 'next/image' imported
-import { motion } from 'framer-motion'; // Optional: if you want card-specific animations
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 interface ProjectCardProps {
   project: {
@@ -10,11 +10,15 @@ interface ProjectCardProps {
     category: string;
     description: string;
     imageSrc: string; // Path to the project image
+    link: string; // Added link attribute to the interface
   };
   index: number; // The index of the project in the array
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+// --- Optimization 1: Use React.memo ---
+// Wrap the component with React.memo. This prevents the component from re-rendering
+// if its props (project and index) have not shallowly changed.
+const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, index }) => {
   // Determine the layout pattern based on the index (0, 1, 2, 3 repeats)
   const pattern = index % 4;
 
@@ -54,6 +58,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       break;
   }
 
+  // Handle click to redirect
+  const handleImageClick = () => {
+    if (project.link) {
+      window.open(project.link, '_blank'); // Open link in a new tab
+    }
+  };
+
   return (
     // Use motion.div for potential future animations (like fade-in on scroll)
     // Add a thin white border and transparent background
@@ -61,61 +72,65 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
     // Use flex-col to stack content vertically, justify-between to space text and image
     // Removed aspect-square to allow height to be determined by content
     <motion.div
-      className="relative flex flex-col justify-between p-6 border border-white border-opacity-20 bg-transparent overflow-hidden h-full" // Removed aspect-square
-      // Optional: Add Framer Motion initial/animate/whileHover props here
+      className="relative flex flex-col justify-between py-6 px-15 md:m-0 m-5 border border-white border-opacity-20 bg-transparent overflow-hidden h-full"
+      // Optional: Add Framer Motion initial/animate/whileHover props here (for the whole card)
       // For example: initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      // whileHover={{ scale: 1.02 }} // Example hover effect
     >
       {/* Large Project Number - Absolutely Positioned */}
-      {/* Reduced text size from text-8xl to text-6xl */}
-      <div className={`absolute text-6xl p-6 font-bold text-white text-opacity-10 ${numberPositionClasses}`}>
+      <div className={`absolute md:text-6xl text-3xl p-6 font-bold text-white text-opacity-10 ${numberPositionClasses}`}>
         {project.number}
       </div>
 
       {/* Content Area (Text Block and Image Block) */}
-      {/* Use flex-col to stack text and image, use order classes */}
-      {/* h-full is still needed here to ensure this flex container fills the parent's height */}
       <div className="flex flex-col justify-between h-full">
 
         {/* Text Content Block (Title, Category, Description) */}
-        {/* Use flex-col to stack Title/Category and Description, apply alignment */}
-        {/* Added some padding to the text block */}
         <div className={`flex flex-col ${contentAlignmentClasses} ${textOrderClass} z-10 p-6`}>
-           {/* Title and Category */}
-           <div>
-             <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-             <p className="text-sm text-gray-400">{project.category}</p>
-           </div>
-           {/* Description */}
-           <div className="mt-2"> {/* Add some space between title/category and description */}
-             <p className="text-gray-300 text-sm leading-relaxed">{project.description}</p>
-           </div>
+            {/* Title and Category */}
+            <div>
+              <h3 className="md:text-xl text-md font-semibold text-white">{project.title}</h3>
+              <p className="md:text-sm text-xs text-gray-400">{project.category}</p>
+            </div>
+            {/* Description */}
+            <div className="mt-2">
+              <p className="text-gray-300 text-sm leading-relaxed">{project.description}</p>
+            </div>
         </div>
 
-
-        {/* Project Image Block */}
-        {/* The image block, position controlled by orderClass. Use flex-grow to take available space. */}
-        {/* Removed fixed height (h-48) and added flex-grow */}
-        <div className={`relative w-full flex-grow rounded-xl overflow-hidden ${imageOrderClass} z-10`}>
-           {/* Use the Image component here */}
-           {/* layout="fill" makes the image take the size of its parent container */}
-           {/* objectFit="cover" makes the image fill the container while maintaining aspect ratio (may crop) */}
-           {/* If you want to show the *entire* image without cropping, use objectFit="contain" instead.
-               This might leave some empty space within the container if the aspect ratios don't match. */}
-           <Image
-             src={project.imageSrc}
-             alt={`${project.title} image`}
-             width={500} // Adjust as needed
-             height={500} // Adjust as needed
-             //layout="fill"
-             //objectFit="cover" // Or "contain" if you prefer no cropping
-           />
-           {/* Removed the placeholder div */}
-        </div>
+        {/* Project Image Block - Now a motion.div to handle animations and clicks */}
+        {/* Added flex-grow to help manage space within the flex container */}
+        {/* Added initial opacity, hover effects, transition, and onClick handler */}
+        <motion.div
+            className={`relative w-full flex-grow rounded-xl overflow-hidden z-10 ${imageOrderClass}`} // Added cursor-pointer
+            initial={{ opacity: 0.7 }} // Changed initial opacity to 70%
+            whileHover={{ opacity: 1, scale: 1.05 }} // Hover effects: opacity 100%, scale 10% (1.05 is 5%)
+            transition={{ duration: 0.3 }} // Smooth transition for hover effects
+            onClick={handleImageClick} // Handle click to redirect
+        >
+            {/* Use the Image component here - Using explicit width/height */}
+            {/* Make sure these width/height are representative of the display size */}
+            {/* Also, ensure your source images are reasonably sized, not huge files */}
+            <Image
+              src={project.imageSrc}
+              alt={`${project.title} image`}
+              width={500} // Using the explicit width
+              height={500} // Using the explicit height
+              // --- Optimization 2: Image Loading ---
+              // layout="intrinsic" or "fixed" work with explicit width/height
+              // layout="responsive" is often better if width changes (e.g., on mobile) and requires a parent with width
+              // layout="fill" requires a parent with relative/absolute positioning and dimensions
+              // The current explicit width/height with default layout is essentially "intrinsic"
+              // Add 'priority' only for images above the fold that need to load quickly.
+              // If you have many cards, DON'T add priority to all of them.
+              // priority={index === 0} // Example: Add priority only to the first image if it's visible initially
+            />
+        </motion.div>
 
       </div> {/* End Content Area */}
     </motion.div>
   );
-};
+}); // End of React.memo wrap
+
+ProjectCard.displayName = 'ProjectCard'; // Add a display name for better debugging
 
 export default ProjectCard;

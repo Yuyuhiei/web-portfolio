@@ -2,15 +2,14 @@
 
 "use client"
 
-import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React from "react"; // Removed useState
+import Image from "next/image"; // Keep Image for CircularText section
 
 // Import your data
 import { projects } from '@/data/projects'; // Adjust the path if your file is in a different location
 
 // Import your components and blocks
-import GooeyNav from "@/blocks/Components/GooeyNav/GooeyNav";
+// Removed GooeyNav import
 import BlurText from "@/blocks/TextAnimations/BlurText/BlurText";
 import TrueFocus from "@/blocks/TextAnimations/TrueFocus/TrueFocus";
 import Threads from "@/blocks/Backgrounds/Threads/Threads";
@@ -23,12 +22,7 @@ import SkillTag from '@/components/SkillTag'; // Assuming SkillTag is in compone
 import ProjectCard from '@/components/ProjectCard'; // Import the new ProjectCard component
 
 
-// Define items for GooeyNav
-const items = [
-  { label: "About", href: "#" },
-  { label: "Experience", href: "#" },
-  { label: "Contact", href: "#" },
-];
+// Removed items constant
 
 const handleAnimationComplete = () => {
   console.log('Animation completed!');
@@ -48,156 +42,25 @@ const contentSkills = [
 
 
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // --- Custom Cursor Implementation ---
-  // Use MotionValues to track the raw mouse position
-  // Initialize to 0 on both server and client to prevent hydration errors
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
-
-  // Configure spring physics for the dot (follows closely)
-  const dotSpringConfig = { damping: 25, stiffness: 300 };
-  // Configure spring physics for the outline (trails the dot)
-  const outlineSpringConfig = { damping: 35, stiffness: 200 }; // More damping/less stiffness for trailing
-
-  // Create sprung motion values for the inner dot
-  const dotX = useSpring(cursorX, dotSpringConfig);
-  const dotY = useSpring(cursorY, dotSpringConfig);
-
-  // Create sprung motion values for the outer outline, based on the dot's sprung values
-  const outlineX = useSpring(dotX, outlineSpringConfig);
-  const outlineY = useSpring(dotY, outlineSpringConfig);
-
-  // Effect to update mouse position on mousemove AND set initial position after mount
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-    };
-
-    // Set initial cursor position to the center of the window after the component mounts
-    // This runs only on the client after hydration
-    cursorX.set(window.innerWidth / 2);
-    cursorY.set(window.innerHeight / 2);
-
-
-    // Add event listener for subsequent mouse movements
-    window.addEventListener('mousemove', moveCursor);
-
-    // Clean up event listener on component unmount
-    return () => {
-      window.removeEventListener('mousemove', moveCursor);
-    };
-  }, [cursorX, cursorY]); // Dependencies: update effect if motion values change (they won't here, but good practice)
-  // --- End Custom Cursor Implementation ---
-
-
+  // Removed mobileMenuOpen state
   return (
     // The cursor: 'none' style is now applied globally in layout.tsx
-    <div className="flex flex-col min-h-screen bg-[#101112] font-gilroy">
-      {/* --- Custom Cursor Elements --- */}
-      {/* Inner Glowing Dot */}
-      <motion.div
-        style={{
-          x: dotX, // Bind x position to the dot's sprung motion value
-          y: dotY, // Bind y position to the dot's sprung motion value
-          pointerEvents: 'none', // Ensure the cursor doesn't block clicks on elements below it
-          left: 0, // Position relative to the viewport
-          top: 0,
-          position: 'fixed', // Stay in fixed position relative to the viewport
-          zIndex: 9999, // Ensure it's always on top
-          transform: 'translate(-50%, -50%)', // Center the div exactly on the cursor coordinates
-          width: '8px', // Size of the inner dot
-          height: '8px',
-          borderRadius: '50%', // Make it round
-          backgroundColor: '#06b6d4', // Cyan color (Tailwind cyan-500 equivalent)
-          boxShadow: '0 0 10px 4px rgba(6, 182, 212, 0.7)', // Glowing effect
-        }}
-      />
-
-      {/* Outer Trailing Circle */}
-      <motion.div
-        style={{
-          x: outlineX, // Bind x position to the outline's sprung motion value
-          y: outlineY, // Bind y position to the outline's sprung motion value
-          pointerEvents: 'none', // Ensure the cursor doesn't block clicks
-          left: 0, // Position relative to the viewport
-          top: 0,
-          position: 'fixed', // Stay in fixed position
-          zIndex: 9998, // Z-index slightly lower than the dot
-          transform: 'translate(-50%, -50%)', // Center the div
-          width: '30px', // Size of the outer circle
-          height: '30px',
-          borderRadius: '50%', // Make it round
-          border: '2px solid #0891b2', // Border color (Tailwind cyan-600 equivalent)
-          // Optional: opacity for transparency
-          // opacity: 0.5,
-        }}
-      />
-      {/* --- End Custom Cursor Elements --- */}
-
-
-      {/* Header Section */}
-      <header className="sticky top-0 z-50 flex w-full items-center justify-between p-6 md:p-8 bg-[#101112]/90 backdrop-blur-sm">
-        {/* Logo */}
-        <Image
-          src="/logo/lauv-logo2.svg"
-          alt="Lauv Logo"
-          width={35}
-          height={35}
-          className="m-10 transition-all duration-300 hover:scale-150 hover:rotate-10 hover:brightness-125 cursor-pointer"
-        />
-
-        {/* Desktop Navigation - hidden on small screens */}
-        <div className="hidden md:block font-medium" style={{ height: '70px', width: '450px', position: 'relative' }}>
-          <GooeyNav
-            items={items}
-            particleCount={15}
-            particleDistances={[90, 10]}
-            particleR={100}
-            initialActiveIndex={0}
-            animationTime={600}
-            timeVariance={300}
-            colors={[1, 2, 3, 1, 2, 3, 1, 4]}
+    // Removed outer div as layout.tsx now handles the main structure
+    // <div className="flex flex-col min-h-screen bg-[#101112] font-gilroy"> // Removed this line
+    <> {/* Added React Fragment wrapper */}
+      {/* Main content area */}
+      <main className="flex-grow flex flex-col items-center h-full relative pt-20"> {/* Added padding top to account for fixed header */}
+        <div style={{ width: '100%', height: '600px', position: 'absolute', bottom: '50'}} className="hidden md:block">
+          <Threads
+            amplitude={2.5}
+            distance={0}
+            enableMouseInteraction={false}
           />
         </div>
 
-        {/* Hamburger button - visible only on small screens */}
-        <button
-          className="md:hidden text-white p-2 focus:outline-none"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <div className="w-6 h-0.5 bg-white mb-1.5 transition-all duration-300 ease-in-out"></div>
-          <div className="w-6 h-0.5 bg-white mb-1.5 transition-all duration-300 ease-in-out"></div>
-          <div className="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out"></div>
-        </button>
-      </header>
-
-      {/* Mobile menu - only visible when mobileMenuOpen is true */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#1a1b1c] absolute top-[90px] right-0 left-0 z-50 p-5">
-          <nav className="flex flex-col space-y-4">
-            {items.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="text-white hover:text-gray-300 py-2 px-4 font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
-
-
-      {/* Main content area */}
-      <main className="flex-grow flex flex-col items-center h-full relative">
-        <div style={{ width: '100%', height: '600px', position: 'absolute', bottom: '50'}}>
+        <div style={{ width: '100%', height: '600px', position: 'absolute', bottom: '50'}} className="md:hidden opacity-10">
           <Threads
-            amplitude={3}
+            amplitude={2.5}
             distance={0}
             enableMouseInteraction={false}
           />
@@ -211,11 +74,11 @@ export default function Home() {
             animateBy="letters"
             direction="top"
             onAnimationComplete={handleAnimationComplete}
-            className="lg:text-9xl md:text-7xl sm:text-5xl text-center"
+            className="lg:text-9xl md:text-7xl text-4xl text-center"
           />
         </div>
 
-        <div className="font-bold text-center opacity-0 animate-fadeIn mt-3">
+        <div className="font-bold text-center opacity-0 animate-fadeIn mt-1 md:mt-3">
           <TrueFocus
             sentence="Developer   Creator   Solopreneur"
             manualMode={true}
@@ -245,7 +108,7 @@ export default function Home() {
           }
         `}</style>
 
-        <div className="w-full flex items-center mt-8 mb-4 relative h-[300px]">
+        <div className="w-full items-center mt-8 mb-4 relative h-[300px] hidden md:block">
           <CircularText
             text="SCROLL-DOWN*SCROLL-DOWN*"
             onHover="slowDown"
@@ -257,21 +120,21 @@ export default function Home() {
             alt="Lauv Logo"
             width={20}
             height={20}
-            className="m-10 transition-all duration-300 hover:scale-150 hover:rotate-10 hover:brightness-125 cursor-pointer absolute left-44 bottom-9"
+            className="m-10 transition-all duration-300 hover:scale-150 hover:rotate-10 hover:brightness-125 absolute left-44 bottom-9"
           />
         </div>
 
-        <div className="flex-grow flex flex-row items-center justify-center w-9xl mt-35 space-x-50">
+        <div className="flex-grow flex flex-col md:flex-row items-center justify-center w-full md:w-9xl md:mt-35 mt-10 md:space-x-50 space-x-0">
           {/* Tech Stack Section Start */}
              <div className="flex flex-col w-full max-w-lg px-4 md:px-0 mt-10 mb-20 space-y-8">
              {/* DEVELOP Card */}
              {/* custom-corner-border class is kept from previous step */}
              {/* hover:scale-105 on the card wrapper is kept */}
              <div className="relative p-6 rounded-lg transition-transform duration-300 ease-in-out hover:scale-105 custom-corner-border">
-               <h3 className="text-white font-bold text-2xl tracking-wide mb-3">
+               <h3 className="text-white font-bold md:text-2xl text-lg tracking-wide mb-3">
                  DEVELOP
                </h3>
-               <p className="text-gray-400 text-sm mt-2 leading-relaxed mb-5">
+               <p className="text-gray-400 md:text-md text-sm mt-2 leading-relaxed mb-5">
                  Started creating mobile applications using Flutter, FlutterFlow, and Firebase and eventually switched to Web Development using NextJS, React, and Tailwind
                </p>
                <h4 className="text-cyan-300 font-semibold mb-3 text-base">
@@ -288,10 +151,10 @@ export default function Home() {
              {/* custom-corner-border class is kept from previous step */}
              {/* hover:scale-105 on the card wrapper is kept */}
              <div className="relative p-6 rounded-lg transition-transform duration-300 ease-in-out hover:scale-105 custom-corner-border">
-               <h3 className="text-white font-bold text-2xl tracking-wide mb-3">
+               <h3 className="text-white font-bold md:text-2xl text:lg tracking-wide mb-3">
                  CREATE {/* Updated title based on your code */}
                </h3>
-               <p className="text-gray-400 text-sm mt-2 leading-relaxed mb-5">
+               <p className="text-gray-400 md:text-md text-sm mt-2 leading-relaxed mb-5">
                    My content creation journey evolved from a side hustle to serving other creators, achieving an average reach of 15 million within 90 days. {/* Updated description */}
                </p>
                <h4 className="text-cyan-300 font-semibold mb-3 text-base">
@@ -315,52 +178,78 @@ export default function Home() {
               animateBy="words"
               direction="top"
               onAnimationComplete={handleAnimationComplete}
-              className="text-7xl font-extrabold"
+              className="md:text-7xl text-3xl font-extrabold"
             />
 
-            <TiltedCard
-              imageSrc="/photos/tiltedcard.svg"
-              altText="Yuyuhiei"
-              captionText="Lauvigne Lumeda"
-              containerHeight="600px"
-              containerWidth="500px"
-              imageHeight="600px"
-              imageWidth="500px"
-              rotateAmplitude={10}
-              scaleOnHover={1.1}
-              showMobileWarning={false}
-              showTooltip={false}
-              displayOverlayContent={true}
-              overlayContent={
-                <p className="bg-transparent px-4 py-2 border-1 border-dashed rounded-lg opacity-50 font-bold m-5 absolute top-5 left-85">
-                  Lauvigne
-                </p>
-              }
-            />
+            <div className="hidden md:block mt-10 mb-20">
+              <TiltedCard
+                imageSrc="/photos/tiltedcard.svg"
+                altText="Yuyuhiei"
+                captionText="Lauvigne Lumeda"
+                containerHeight="600px"
+                containerWidth="500px"
+                imageHeight="600px"
+                imageWidth="500px"
+                rotateAmplitude={10}
+                scaleOnHover={1.1}
+                showMobileWarning={false}
+                showTooltip={false}
+                displayOverlayContent={true}
+                overlayContent={
+                  <p className="bg-transparent px-4 py-2 border-1 border-dashed rounded-lg opacity-50 font-bold m-5 absolute top-5 left-85">
+                    Lauvigne
+                  </p>
+                }
+              />
+            </div>
+
+            <div className="md:hidden mt-10 mb-20">
+              <TiltedCard
+                imageSrc="/photos/tiltedcard.svg"
+                altText="Yuyuhiei"
+                captionText="Lauvigne Lumeda"
+                containerHeight="400px"
+                containerWidth="300px"
+                imageHeight="400px"
+                imageWidth="300px"
+                rotateAmplitude={10}
+                scaleOnHover={1.1}
+                showMobileWarning={false}
+                showTooltip={false}
+                displayOverlayContent={true}
+                overlayContent={
+                  <p className="bg-transparent px-4 py-2 border-1 border-dashed rounded-lg opacity-50 font-bold m-5 absolute">
+                    Lauvigne
+                  </p>
+                }
+              />
+            </div>
+
+            
           </div>
         </div>
 
         {/* Experience Section */}
-        <div className="flex w-full items-center justify-center p-4 mt-40">
+        <div className="flex w-full items-center justify-center p-4 md:mt-40 mt-5">
           <BlurText
             text=" My Experience"
             delay={150}
             animateBy="words"
             direction="top"
             onAnimationComplete={handleAnimationComplete}
-            className="text-7xl font-extrabold"
+            className="md:text-7xl text-3xl font-extrabold"
           />
         </div>
         <ExperienceTimeline />
 
-        <div className="flex w-full items-center justify-center p-4 mt-40">
+        <div className="flex w-full items-center justify-center p-4 md:mt-40 mt-5 font-extrabold">
           <BlurText
             text=" My Projects"
             delay={150}
-            animateBy="words"
+            animateBy="letters"
             direction="top"
             onAnimationComplete={handleAnimationComplete}
-            className="text-7xl font-extrabold"
+            className="md:text-7xl text-3xl font-extrabold"
           />
         </div>
 
@@ -373,14 +262,14 @@ export default function Home() {
              ))}
            </div>
         {/* Projects Section End */}
-
-
       </main>
 
-      {/* Footer Section */}
-      <footer className="flex w-full items-center justify-center p-4 border-t border-white/[.15] text-white/50 text-sm font-light">
-        <p>&copy; {new Date().getFullYear()} Your Name. All rights reserved.</p>
+
+      {/* Footer Section - Consider moving this to layout.tsx as well for consistency */}
+      <footer className="flex w-full items-center justify-center p-4 border-t border-white/[.15] text-white/50 text-sm font-light mt-20"> {/* Added margin top */}
+        <p>&copy; {new Date().getFullYear()} Lauvigne Lumeda. All rights reserved.</p> {/* Updated name */}
       </footer>
-    </div>
+    </> // Closed React Fragment wrapper
+    // </div> // Removed this closing tag
   );
 }
