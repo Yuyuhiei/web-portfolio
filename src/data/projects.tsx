@@ -8,7 +8,7 @@ export const projects = [
       category: 'Web Development',
       description: 'Web Developer',
       imageSrc: '/projects/project_1.svg', // Replace with actual image paths
-      link: 'https://www.google.com/chrome/what-you-make-of-it/',
+      link: 'https://github.com/Yuyuhiei/Haliya-The-AI-Fortune-Teller',
     },
     {
       id: 2,
@@ -17,7 +17,7 @@ export const projects = [
       category: 'Web Development',
       description: 'Web Developer',
       imageSrc: '/projects/project_2.svg',
-      link: 'https://www.google.com/chrome/what-you-make-of-it/',
+      link: 'https://www.gdsc-plm.org/',
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ export const projects = [
       category: 'Web Development',
       description: 'Full Stack Developer',
       imageSrc: '/projects/project_3.svg',
-      link: 'https://www.google.com/chrome/what-you-make-of-it/',
+      link: 'https://plmce-grievdesk.web.app/',
     },
     {
       id: 4,
@@ -35,7 +35,7 @@ export const projects = [
       category: 'Full Stack Development',
       description: 'Full Stack Developer',
       imageSrc: '/projects/project_4.svg',
-      link: 'https://www.google.com/chrome/what-you-make-of-it/',
+      link: 'https://github.com/Yuyuhiei/conso-web-ide',
     },
     // Add more projects following this structure
     {
@@ -45,7 +45,7 @@ export const projects = [
       category: 'Web Development',
       description: 'Web Developer',
       imageSrc: '/projects/project_5.svg',
-      link: 'https://www.google.com/chrome/what-you-make-of-it/',
+      link: 'https://aceframe.web.app/', 
     },
     {
       id: 6,
@@ -54,6 +54,6 @@ export const projects = [
       category: 'Web Application',
       description: 'Database Administrator and Developer',
       imageSrc: '/projects/project_6.svg',
-      link: 'https://www.google.com/chrome/what-you-make-of-it/',
+      link: 'https://github.com/Yuyuhiei/PLM-Regulars-Enrolment-System',
     },
   ];

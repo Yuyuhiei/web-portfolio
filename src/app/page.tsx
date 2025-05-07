@@ -112,7 +112,7 @@ export default function Home() {
           <CircularText
             text="SCROLL-DOWN*SCROLL-DOWN*"
             onHover="slowDown"
-            spinDuration={10}
+            spinDuration={5}
             className="absolute left-45 bottom-10"
           />
           <Image

@@ -196,8 +196,8 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
             content: "";
             position: absolute;
             inset: -75px;
-            z-index: -2;
-            background: black;
+            z-index: -1;
+            background: none;	
           }
           .effect.filter::after {
             content: "";
@@ -210,7 +210,6 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
             border-radius: 9999px;
           }
           .effect.active::after {
-            animation: pill 0.3s ease both;
           }
           @keyframes pill {
             to {

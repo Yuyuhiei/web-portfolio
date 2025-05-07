@@ -19,7 +19,14 @@ import { gilroy } from "@/fonts/fonts";
 const items = [
   { label: "Home", href: "/" },
   { label: "Awards", href: "/Hackathons" },
-  { label: "Contact", href: "#" }, // Adjust as needed
+  { label: "Contact", href: "/Contact" }, // Adjust as needed
+];
+
+// Define social media links and placeholder icon paths
+const socialLinks = [
+  { platform: "GitHub", href: "https://github.com/Yuyuhiei", iconPath: "/icons/github_icon.svg" }, // <-- Replace YOUR_GITHUB_LINK and icon path
+  { platform: "LinkedIn", href: "https://www.linkedin.com/in/lauvigne-lumeda/", iconPath: "/icons/linkedin_icon.svg" }, // <-- Replace YOUR_LINKEDIN_LINK and icon path
+  { platform: "Gmail", href: "mailto:lumedalauvigne@gmail.com", iconPath: "/icons/gmail_icon.svg" }, // <-- Replace YOUR_EMAIL_ADDRESS and icon path
 ];
 
 
@@ -144,7 +151,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${gilroy.variable} antialiased font-gilroy`}
+        // Added bg-black class for black background
+        className={`${geistSans.variable} ${geistMono.variable} ${gilroy.variable} antialiased font-gilroy bg-black`}
         style={{ cursor: 'none' }} // Apply cursor: none globally to the body
         >
         {/* Custom Cursor Dot */}
@@ -186,7 +194,7 @@ export default function RootLayout({
         />
         {/* Header Section */}
         {/* Adjusted padding for different screen sizes */}
-        <header className="sticky top-0 z-50 flex w-full items-center justify-between px-4 py-4 md:px-8 md:py-6 bg-[#101112]/90 backdrop-blur-sm">
+        <header className="sticky top-0 z-50 flex w-full items-center justify-between px-4 py-2 md:px-8 md:py-3 bg-transparent backdrop-blur-[3px]">
           {/* Logo */}
           {/* Using Link for Logo if it navigates to home */}
           {/* Adjusted margin for different screen sizes */}
@@ -234,10 +242,12 @@ export default function RootLayout({
         </header>
 
         {/* Mobile menu - only visible when mobileMenuOpen is true */}
-        {/* Positioned absolutely below the header, covers full width on mobile */}
+        {/* Positioned fixed below the header, covers full width on mobile */}
         {mobileMenuOpen && (
-          // Added responsive padding to the mobile menu container
-          <div className="md:hidden bg-[#1a1b1c] absolute top-[72px] sm:top-[80px] md:top-[96px] right-0 left-0 z-40 p-4 sm:p-5"> {/* Adjusted top position and padding */}
+          // Changed position from absolute to fixed
+          // Adjusted top position to match header height at different breakpoints
+          // Added overflow-y-auto to allow scrolling if the menu content is taller than the viewport
+          <div className="md:hidden bg-transparent backdrop-blur-[10px] pt-10 fixed top-[72px] sm:top-[80px] md:top-[96px] right-0 left-0 z-40 p-4 sm:p-5 overflow-y-auto h-[calc(100vh - 72px)] sm:h-[calc(100vh - 80px)] md:h-[calc(100vh - 96px)]"> {/* Adjusted top position, added overflow-y-auto and height */}
             <nav className="flex flex-col space-y-4">
               {items.map((item, index) => (
                 // Using <Link> for navigation items
@@ -257,6 +267,35 @@ export default function RootLayout({
         {/* End Header Section */}
 
         {children} {/* This is where your page content (like page.tsx) will be rendered */}
+
+        {/* Sticky Social Media Container */}
+        {/* Positioned fixed to the bottom right */}
+        {/* Added responsive padding, rounded corners, border, and background */}
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 bg-black/60 border border-white/[.30] border-dashed rounded-full p-2 md:p-4 flex flex-col items-center space-y-2 md:space-y-5">
+          {socialLinks.map((link) => (
+            // Link for each social media icon
+            <Link
+              key={link.platform}
+              href={link.href}
+              target="_blank" // Open link in new tab
+              rel="noopener noreferrer" // Security best practice for target="_blank"
+              // Added hover effects
+              className="transition-transform duration-200 hover:scale-110"
+            >
+              {/* Social media icon image */}
+              <Image
+                src={link.iconPath} // Use the icon path from the socialLinks array
+                alt={`${link.platform} icon`}
+                // Adjusted icon size responsively
+                width={20} // Base size for mobile
+                height={20} // Base size for mobile
+                className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 object-contain" // Responsive size and object-contain
+              />
+            </Link>
+          ))}
+        </div>
+        {/* End Sticky Social Media Container */}
+
       </body>
     </html>
   );
